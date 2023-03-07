@@ -1,8 +1,6 @@
-console.log(getComputerChoice());
-
 function getComputerChoice() { return ['Rock','Paper','Scissors'][randInt(3)] }
 
-function randInt(num) { Math.floor(Math.random() * (num - 0.1)) }
+function randInt(num) { return Math.floor(Math.random() * (num - 0.1)) }
 
 function game(playerSelection, computerSelection = getComputerChoice()) {
 
