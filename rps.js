@@ -29,7 +29,17 @@ function playRound(playerSelection, computerSelection = getComputerChoice()) {
 }
 
 function game() {
+    console.log(`WELCOME TO ROCK PAPER SCISSORS!
+    
+    This will be a game of ${GAME_COUNT} rounds.
+    `);
+
     for (let i = 0; i < ROUND_COUNT; i++) {
-        // game loop goes here
-    }     
+        console.log(`
+        ROUND ${i+1}:
+        `);
+        console.log(playRound(prompt("Enter your choice of weapon: ")));
+    }
+
+    console.log('Thanks for playing!')
 }
