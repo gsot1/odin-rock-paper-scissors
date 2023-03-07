@@ -1,36 +1,39 @@
-const ROUND_COUNT = 5
-let playerWin = 0;
-let computWin = 0;
+const ROUND_COUNT = 5;
 
 ///////////////////////////////////////////
 
-function getComputerChoice() { return ['Rock','Paper','Scissors'][randInt(3)] }
-
 function randInt(num) { return Math.floor(Math.random() * (num - 0.1)) }
 
-function playRound(playerSelection, computerSelection = getComputerChoice()) {
+function getComputerChoice() { return ['Rock','Paper','Scissors'][randInt(3)] }
+
+function playRound(playerSelection, computerSelection) {
 
     playerSelection = playerSelection.trim().toLowerCase();
 
     switch(playerSelection) {
         case "rock":
-            if (computerSelection === 'Rock') return "It's a tie! You both picked Rock";
-            else if (computerSelection === 'Paper') return "You Lose! Paper beats Rock";
-            else return "You Win! Rock beats Scissors";
+            if (computerSelection === 'Rock') return "tie";
+            else if (computerSelection === 'Paper') return "lose";
+            else return "win";
         case "paper":
-            if (computerSelection === 'Rock') return "You Win! Paper beats Rock";
-            else if (computerSelection === 'Paper') return "It's a tie! You both picked Paper";
-            else return "You Lose! Scissors beats Paper";
+            if (computerSelection === 'Rock') return "win";
+            else if (computerSelection === 'Paper') return "tie";
+            else return "lose";
         case "scissors":
-            if (computerSelection === 'Rock') return "You Lose! Rock beats Scissors";
-            else if (computerSelection === 'Paper') return "You Win! Scissors beats Paper";
-            else return "It's a tie! You both picked Scissors";
+            if (computerSelection === 'Rock') return "lose";
+            else if (computerSelection === 'Paper') return "win";
+            else return "tie";
         default:
-            return "That's not an option. You forfeited this round!";
+            return "retry";
     }
 }
 
 function game() {
+    let playerWin = 0;
+    let computWin = 0;
+    let playerChoice;
+    let computChoice;
+
     console.log(`WELCOME TO ROCK PAPER SCISSORS!
     
 This will be a game of ${ROUND_COUNT} rounds.
@@ -40,13 +43,44 @@ This will be a game of ${ROUND_COUNT} rounds.
         console.log(`
 ROUND ${i+1}:
         `);
-        console.log(playRound(prompt("Enter rock, paper, or scissors: ")));
+
+        let results = "retry";
+
+        while (results === "retry") {
+            playerChoice = prompt("Enter rock, paper, or scissors: ");
+            computChoice = getComputerChoice();
+
+            results = playRound(playerChoice, computChoice);
+
+            switch (results) {
+                case "win":
+                    console.log(`YOU WIN! ${playerChoice.trim()} beats ${computChoice}`);
+                    ++playerWin;
+                    break;
+                case "lose":
+                    console.log(`YOU LOST! ${computChoice} beats ${playerChoice.trim()}`);
+                    ++computWin;
+                    break;
+                case "tie":
+                    console.log(`IT'S A DRAW! You both chose ${playerChoice.trim()}`);
+                    break;
+                default:
+                    console.log("What? Please try again.");
+            }
+        }
     }
 
-    console.log('GAME OVER');
+    if (computWin > playerWin) {
+        console.log(`SORRY! YOU LOST ${computWin}-${playerWin}`);
+    } else if (computWin < playerWin) {
+        console.log(`VICTORY! YOU WON ${playerWin}-${computWin}`);
+    } else {
+        console.log(`DRAW! YOU BOTH SCORED ${playerWin}`);
+    }
+
     return 'Thanks for playing!';
 }
 
 /////////////////////////////////////////
 
-console.log(`To get started, type "game()" below.`)
+console.log(`To get started, type "game()" below.`);
