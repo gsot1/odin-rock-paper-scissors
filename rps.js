@@ -1,3 +1,8 @@
+// remove the logic that plays exactly 5 rounds, make it run to 5 points instead
+// create three RPS buttons that hook into your program with eventListeners calling playRound()
+// create a div for results and remove the console.log calls
+// display the running score
+
 const ROUND_COUNT = 5;
 
 ///////////////////////////////////////////
