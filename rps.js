@@ -1,9 +1,8 @@
-// remove the logic that plays exactly 5 rounds, make it run to 5 points instead
 // create three RPS buttons that hook into your program with eventListeners calling playRound()
 // create a div for results and remove the console.log calls
 // display the running score
 
-const ROUND_COUNT = 5;
+const POINT_COUNT = 5;
 
 ///////////////////////////////////////////
 
@@ -41,13 +40,10 @@ function game() {
 
     console.log(`WELCOME TO ROCK PAPER SCISSORS!
     
-This will be a game of ${ROUND_COUNT} rounds.
+The game will play until someone wins ${POINT_COUNT} rounds.
     `);
 
-    for (let i = 0; i < ROUND_COUNT; i++) {
-        console.log(`
-ROUND ${i+1}:
-        `);
+    while (playerWin < 5 && computWin < 5) {
 
         let results = "retry";
 
@@ -76,11 +72,9 @@ ROUND ${i+1}:
     }
 
     if (computWin > playerWin) {
-        console.log(`SORRY! YOU LOST ${computWin}-${playerWin}`);
+        console.log(`SORRY! YOU LOST ${playerWin}-${computWin}`);
     } else if (computWin < playerWin) {
         console.log(`VICTORY! YOU WON ${playerWin}-${computWin}`);
-    } else {
-        console.log(`DRAW! YOU BOTH SCORED ${playerWin}`);
     }
 
     return 'Thanks for playing!';
