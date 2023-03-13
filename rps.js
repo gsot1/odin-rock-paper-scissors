@@ -1,5 +1,3 @@
-// display the running score
-
 const POINT_COUNT = 5;
 let playerWin;
 let computWin;
@@ -51,15 +49,15 @@ function gameLoop(e) {
                 break;
         }
 
-    } else {
-
-        if (computWin > playerWin) {
-            document.querySelector('#results').innerText = `SORRY! YOU LOST ${playerWin}-${computWin}`;
-        } else if (computWin < playerWin) {
-            document.querySelector('#results').innerText = `VICTORY! YOU WON ${playerWin}-${computWin}`;
-        }
-
     }
+    
+    if (computWin === 5 && computWin > playerWin) {
+        document.querySelector('#results').innerText = `SORRY! YOU LOST`;
+    } else if (playerWin === 5 && computWin < playerWin) {
+        document.querySelector('#results').innerText = `VICTORY! YOU WIN`;
+    }
+
+    document.querySelector('#score').innerText = `${playerWin} - ${computWin}`;
 }
 
 function gameSetup() {
