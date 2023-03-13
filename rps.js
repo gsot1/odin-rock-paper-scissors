@@ -1,4 +1,3 @@
-// create a div for results and remove the console.log calls
 // display the running score
 
 const POINT_COUNT = 5;
@@ -14,20 +13,20 @@ function randInt(num) { return Math.floor(Math.random() * (num - 0.1)) }
 function playRound(e) {
 
     playerChoice = e.target.id;
-    computChoice = ['Rock','Paper','Scissors'][randInt(3)];
+    computChoice = ['rock','paper','scissors'][randInt(3)];
 
     switch(playerChoice) {
         case "rock":
-            if (computChoice === 'Rock') return "tie";
-            else if (computChoice === 'Paper') return "lose";
+            if (computChoice === 'rock') return "tie";
+            else if (computChoice === 'paper') return "lose";
             else return "win";
         case "paper":
-            if (computChoice === 'Rock') return "win";
-            else if (computChoice === 'Paper') return "tie";
+            if (computChoice === 'rock') return "win";
+            else if (computChoice === 'paper') return "tie";
             else return "lose";
         case "scissors":
-            if (computChoice === 'Rock') return "lose";
-            else if (computChoice === 'Paper') return "win";
+            if (computChoice === 'rock') return "lose";
+            else if (computChoice === 'paper') return "win";
             else return "tie";
     }
 }
@@ -40,24 +39,24 @@ function gameLoop(e) {
 
         switch (results) {
             case "win":
-               console.log(`YOU WIN! ${playerChoice.trim()} beats ${computChoice}`);
-               ++playerWin;
+                document.querySelector('#results').innerText = `YOU WIN! ${playerChoice} beats ${computChoice}`;
+                ++playerWin;
                 break;
             case "lose":
-                console.log(`YOU LOST! ${computChoice} beats ${playerChoice.trim()}`);
-               ++computWin;
-               break;
+                document.querySelector('#results').innerText = `YOU LOST! ${computChoice} beats ${playerChoice}`;
+                ++computWin;
+                break;
             case "tie":
-                console.log(`IT'S A DRAW! You both chose ${playerChoice.trim()}`);
+                document.querySelector('#results').innerText = `IT'S A DRAW! You both chose ${playerChoice.trim()}`;
                 break;
         }
 
     } else {
 
         if (computWin > playerWin) {
-            console.log(`SORRY! YOU LOST ${playerWin}-${computWin}`);
+            document.querySelector('#results').innerText = `SORRY! YOU LOST ${playerWin}-${computWin}`;
         } else if (computWin < playerWin) {
-            console.log(`VICTORY! YOU WON ${playerWin}-${computWin}`);
+            document.querySelector('#results').innerText = `VICTORY! YOU WON ${playerWin}-${computWin}`;
         }
 
     }
@@ -72,11 +71,6 @@ function gameSetup() {
     let rButton = document.querySelector('#rock');
     let pButton = document.querySelector('#paper');
     let sButton = document.querySelector('#scissors');
-
-    console.log(`WELCOME TO ROCK PAPER SCISSORS!
-    
-The game will play until someone wins ${POINT_COUNT} rounds.
-    `);
 
     rButton.addEventListener("click", gameLoop);
     pButton.addEventListener("click", gameLoop);
