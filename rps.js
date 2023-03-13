@@ -1,85 +1,88 @@
-// create three RPS buttons that hook into your program with eventListeners calling playRound()
 // create a div for results and remove the console.log calls
 // display the running score
 
 const POINT_COUNT = 5;
+let playerWin;
+let computWin;
+let playerChoice;
+let computChoice;
 
 ///////////////////////////////////////////
 
 function randInt(num) { return Math.floor(Math.random() * (num - 0.1)) }
 
-function getComputerChoice() { return ['Rock','Paper','Scissors'][randInt(3)] }
+function playRound(e) {
 
-function playRound(playerSelection, computerSelection) {
+    playerChoice = e.target.id;
+    computChoice = ['Rock','Paper','Scissors'][randInt(3)];
 
-    playerSelection = playerSelection.trim().toLowerCase();
-
-    switch(playerSelection) {
+    switch(playerChoice) {
         case "rock":
-            if (computerSelection === 'Rock') return "tie";
-            else if (computerSelection === 'Paper') return "lose";
+            if (computChoice === 'Rock') return "tie";
+            else if (computChoice === 'Paper') return "lose";
             else return "win";
         case "paper":
-            if (computerSelection === 'Rock') return "win";
-            else if (computerSelection === 'Paper') return "tie";
+            if (computChoice === 'Rock') return "win";
+            else if (computChoice === 'Paper') return "tie";
             else return "lose";
         case "scissors":
-            if (computerSelection === 'Rock') return "lose";
-            else if (computerSelection === 'Paper') return "win";
+            if (computChoice === 'Rock') return "lose";
+            else if (computChoice === 'Paper') return "win";
             else return "tie";
-        default:
-            return "retry";
     }
 }
 
-function game() {
-    let playerWin = 0;
-    let computWin = 0;
-    let playerChoice;
-    let computChoice;
+function gameLoop(e) {
+
+    if (computWin < 5 && playerWin < 5) {
+
+        const results = playRound(e);
+
+        switch (results) {
+            case "win":
+               console.log(`YOU WIN! ${playerChoice.trim()} beats ${computChoice}`);
+               ++playerWin;
+                break;
+            case "lose":
+                console.log(`YOU LOST! ${computChoice} beats ${playerChoice.trim()}`);
+               ++computWin;
+               break;
+            case "tie":
+                console.log(`IT'S A DRAW! You both chose ${playerChoice.trim()}`);
+                break;
+        }
+
+    } else {
+
+        if (computWin > playerWin) {
+            console.log(`SORRY! YOU LOST ${playerWin}-${computWin}`);
+        } else if (computWin < playerWin) {
+            console.log(`VICTORY! YOU WON ${playerWin}-${computWin}`);
+        }
+
+    }
+}
+
+function gameSetup() {
+    playerWin = 0;
+    computWin = 0;
+    playerChoice = '';
+    computChoice = '';
+
+    let rButton = document.querySelector('#rock');
+    let pButton = document.querySelector('#paper');
+    let sButton = document.querySelector('#scissors');
 
     console.log(`WELCOME TO ROCK PAPER SCISSORS!
     
 The game will play until someone wins ${POINT_COUNT} rounds.
     `);
 
-    while (playerWin < 5 && computWin < 5) {
-
-        let results = "retry";
-
-        while (results === "retry") {
-            playerChoice = prompt("Enter rock, paper, or scissors: ");
-            computChoice = getComputerChoice();
-
-            results = playRound(playerChoice, computChoice);
-
-            switch (results) {
-                case "win":
-                    console.log(`YOU WIN! ${playerChoice.trim()} beats ${computChoice}`);
-                    ++playerWin;
-                    break;
-                case "lose":
-                    console.log(`YOU LOST! ${computChoice} beats ${playerChoice.trim()}`);
-                    ++computWin;
-                    break;
-                case "tie":
-                    console.log(`IT'S A DRAW! You both chose ${playerChoice.trim()}`);
-                    break;
-                default:
-                    console.log("What? Please try again.");
-            }
-        }
-    }
-
-    if (computWin > playerWin) {
-        console.log(`SORRY! YOU LOST ${playerWin}-${computWin}`);
-    } else if (computWin < playerWin) {
-        console.log(`VICTORY! YOU WON ${playerWin}-${computWin}`);
-    }
-
-    return 'Thanks for playing!';
+    rButton.addEventListener("click", gameLoop);
+    pButton.addEventListener("click", gameLoop);
+    sButton.addEventListener("click", gameLoop);
 }
 
 /////////////////////////////////////////
 
-console.log(`To get started, type "game()" below.`);
+gameSetup();
